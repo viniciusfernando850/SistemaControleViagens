@@ -57,10 +57,46 @@ public class Aeronave {
         }
     }
 
-    //public Aeronave(String modelo, int assentosEconomica, int assentosExecutiva, int assentosPrimeiraClasse) {
-        //super(modelo, assentosEconomica, assentosExecutiva);
-     //   this.assentosPrimeiraClasse = assentosPrimeiraClasse;
-    //}
+    public void setModelo(String modelo){
+        if(modelo != null){
+            this.modelo = modelo;
+        }
+    }
+
+    public String getModelo(){
+        return this.modelo;
+    }
+
+    public void setAssentosEconomica(int assentosEconomica){
+        if(assentosEconomica != 0){
+            this.assentosEconomica = assentosEconomica;
+        }
+    }
+
+    public int getAssentosEconomica(){
+        return this.assentosEconomica;
+    }
+
+    public void setAssentosExecutiva(int assentosExecutiva){
+        if(assentosExecutiva != 0){
+            this.assentosExecutiva = assentosExecutiva;
+        }
+    }
+
+    public int getAssentosExecutiva(){
+        return this.assentosExecutiva;
+    }
+
+    public void setAssentosPrimeiraClasse(int assentosPrimeiraClasse){
+        if(assentosPrimeiraClasse != 0){
+            this.assentosPrimeiraClasse = assentosPrimeiraClasse;
+        }
+    }
+
+    public int getAssentosPrimeiraClasse(){
+        return this.assentosPrimeiraClasse;
+    }
+
 
     public int numTotalAssentos(){
         int soma = this.assentosEconomica + this.assentosPrimeiraClasse + this.assentosExecutiva;

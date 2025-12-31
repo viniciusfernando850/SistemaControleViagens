@@ -2,10 +2,10 @@ package AirportSystem.Aplicacao.Login.Funcionarios;
 
 public class Funcionario {
     protected String nome;
-    protected String senha;
+    protected String usuario;
 
-    public Funcionario(String nome, String senha){
+    public Funcionario(String nome, String usuario) {
         this.nome = nome;
-        this.senha = senha;
+        this.usuario = usuario;
     }
 }
