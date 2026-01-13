@@ -1,4 +1,4 @@
-package StarTrackAirlines.Controllers.VoosController.Exception;
+package StarTrackAirlines.Controllers.ControleVoos.Exception;
 
 public class AeronaveIndisponivelException extends Exception{
     public AeronaveIndisponivelException(String msgErro){

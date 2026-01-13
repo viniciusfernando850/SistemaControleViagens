@@ -1,23 +1,21 @@
 package StarTrackAirlines.Aplicacao.CompanhiaAerea;
 
-import StarTrackAirlines.Controllers.VendasController.CalculadoraTaxa;
+import StarTrackAirlines.Controllers.ControleVendas.Calculavel;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Map;
 
-public class VooDomestico extends Voo implements CalculadoraTaxa {
+public class VooDomestico extends Voo {
     public VooDomestico(String identificador, Aeronave aeronave, Map<String, Assento> assentosVoo, String origem,
                         String destino, LocalDate data, LocalTime horarioSaida, LocalTime horarioChegada) {
         super(identificador, aeronave, assentosVoo, origem, destino, data, horarioSaida, horarioChegada);
     }
 
-    private static final double TAXA_DOMESTICO = 0.20F;
+    private static final double TARIFA_NACIONAL = 610.45F;
+    private static final float ICMS = 12F;
 
-    @Override
-    public double calcularTaxa(double tarifaBase) {
-        double taxaFinal;
-        taxaFinal = tarifaBase * TAXA_DOMESTICO;
-        return taxaFinal;
-    }
-    }
+    public double getTarifaNacional() {return TARIFA_NACIONAL;}
+    public float getIcms() {return ICMS;}
+
+}

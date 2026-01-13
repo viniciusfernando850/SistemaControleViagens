@@ -1,9 +1,9 @@
 package StarTrackAirlines.Aplicacao;
 
 import StarTrackAirlines.Aplicacao.CompanhiaAerea.*;
-import StarTrackAirlines.Controllers.VoosController.*;
-import StarTrackAirlines.Controllers.VoosController.Exception.*;
-import StarTrackAirlines.Controllers.LoginController.LoginController;
+import StarTrackAirlines.Controllers.ControleVendas.ControleVendas;
+import StarTrackAirlines.Controllers.ControleVoos.*;
+import StarTrackAirlines.Controllers.ControleLogin.ControleLogin;
 import StarTrackAirlines.InterfaceGrafica.*;
 import StarTrackAirlines.InterfaceGrafica.Login.*;
 import StarTrackAirlines.InterfaceGrafica.SecaoCheckin.*;
@@ -39,22 +39,23 @@ public class SistemaGeral {
         return voosRepository.carregarDados(frota);
     }
 
-    public static void configurarInterfaceGrafica() {
+    public static void configurarInterfaceGrafica(Autenticacao autenticacaoLogin, ControleVoo controleVoo,
+                                                  ControleVendas controleVendas) {
         MainWindow window = new MainWindow();
-
-        Autenticacao autenticacao = new Autenticacao();
 
         LoginView loginView = new LoginView();
         SecaoOperacional secaoOperacional = new SecaoOperacional();
         SecaoVendas secaoVendas = new SecaoVendas();
-        SecaoCheckin secaoCheckin = new SecaoCheckin();
+        //SecaoCheckin secaoCheckin = new SecaoCheckin();
 
-        LoginController loginController = new LoginController(window, loginView, autenticacao);
+        new ControleLogin(window, loginView, autenticacaoLogin);
+        //new ControleInterfaceOperacional();
+        new ControleInterfaceVendas();
 
         window.adicionarTela(loginView, "login");
         window.adicionarTela(secaoOperacional, "operacional");
         window.adicionarTela(secaoVendas, "vendas");
-        window.adicionarTela(secaoCheckin, "checkin");
+        //window.adicionarTela(secaoCheckin, "checkin");
 
         window.abrirLogin("login");
     }
@@ -67,7 +68,11 @@ public class SistemaGeral {
             CompanhiaAerea companhiaAerea = new CompanhiaAerea("Star Track Airlines", frota, listagemVoos);
             voosRepository.salvarDados(companhiaAerea);
 
-            configurarInterfaceGrafica();
+            Autenticacao autenticacaoLogin = new Autenticacao();
+            ControleVoo controleVoo = new ControleVoo(companhiaAerea);
+            ControleVendas controleVendas = new ControleVendas();
+
+            configurarInterfaceGrafica(autenticacaoLogin, controleVoo, controleVendas);
 
             /*teste controle
             cadastrar -> SUCESSO T1,SUCESSO T2
@@ -77,7 +82,7 @@ public class SistemaGeral {
             M exception ->
             D exception ->
             */
-            VooController controle = new VooController(companhiaAerea);
+            ControleVoo controle = new ControleVoo(companhiaAerea);
             /*try{
                 controle.cadastrarVoo();
             }catch(DadosInvalidosException | AeronaveIndisponivelException e){
@@ -90,7 +95,6 @@ public class SistemaGeral {
         } catch (IOException e) {
             e.getMessage();
         }
-
 
     }
 }

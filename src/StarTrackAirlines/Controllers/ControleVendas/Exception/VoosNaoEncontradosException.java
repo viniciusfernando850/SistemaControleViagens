@@ -1,4 +1,4 @@
-package StarTrackAirlines.Controllers.VendasController.Exception;
+package StarTrackAirlines.Controllers.ControleVendas.Exception;
 
 public class VoosNaoEncontradosException extends Exception {
 

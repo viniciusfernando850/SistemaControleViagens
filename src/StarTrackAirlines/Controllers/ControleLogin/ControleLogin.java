@@ -1,4 +1,4 @@
-package StarTrackAirlines.Controllers.LoginController;
+package StarTrackAirlines.Controllers.ControleLogin;
 
 import StarTrackAirlines.Aplicacao.Login.Autenticacao;
 import StarTrackAirlines.Aplicacao.Login.Exceptions.DadosInvalidosException;
@@ -15,12 +15,12 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
 
-public class LoginController {
+public class ControleLogin {
     private final MainWindow mainWindow;
     private final LoginView loginView;
     private final Autenticacao autenticacao;
 
-    public LoginController(MainWindow mainWindow, LoginView loginView, Autenticacao autenticacao) {
+    public ControleLogin(MainWindow mainWindow, LoginView loginView, Autenticacao autenticacao) {
         this.mainWindow = mainWindow;
         this.loginView = loginView;
         this.autenticacao = autenticacao;

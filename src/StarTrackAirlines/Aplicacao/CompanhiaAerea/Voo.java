@@ -14,6 +14,11 @@ public class Voo {
     protected LocalTime horarioPartida;
     protected LocalTime horarioChegada;
 
+    protected static final float IBS = 0.1F;
+    protected static final float CBS = 0.9F;
+    protected static final float TAXA_OCUPACAO_50 = 20F;
+    protected static final float TAXA_OCUPACAO_70 = 40F;
+
     public Voo(String identificador, Aeronave aeronave, Map<String, Assento> assentosVoo, String origem,
                String destino, LocalDate data, LocalTime horarioPartida, LocalTime horarioChegada){
 
@@ -27,34 +32,31 @@ public class Voo {
         this.horarioChegada = horarioChegada;
     }
 
-    // get e set de identificador//
     public String getIdentificador(){
         return identificador;
     }
-
     public void setIdentificador(String identificador){ this.identificador = identificador;}
-    //get e set de modeloAviao//
+
     public Aeronave getAeronave(){
         return aeronave;
     }
-
     public void setAeronave (Aeronave aeronave){
         this.aeronave = aeronave;
     }
-    // get e set de origem//
+
+    public Map<String, Assento> getAssentosVoo() {return this.assentosVoo;}
+    public void setAssentosVoo(Map<String, Assento> assentosVoo) {this.assentosVoo = assentosVoo;}
+
     public String getOrigem(){
         return origem;
     }
-
     public void setOrigem(String origem){
         this.origem = origem;
     }
 
-    // get e set de destino//
     public String getDestino(){
         return destino;
     }
-
     public void setDestino(String destino){
         this.destino = destino;
     }
@@ -62,7 +64,6 @@ public class Voo {
     public LocalDate getDataPartida(){
         return dataPartida;
     }
-
     public void setDataPartida(LocalDate data){
         this.dataPartida = data;
     }
@@ -70,16 +71,19 @@ public class Voo {
     public LocalTime getHorarioPartida(){
         return horarioPartida;
     }
-
     public void setHorarioPartida(LocalTime horarioPartida){ this.horarioPartida = horarioPartida;}
 
     public LocalTime getHorarioChegada(){
         return horarioChegada;
     }
-
     public void setHorarioChegada(LocalTime horarioChegada){
         this.horarioChegada = horarioChegada;
     }
+
+    public float getIbs() {return IBS;}
+    public float getCbs() {return CBS;}
+    public float getTaxaOcupacao50() {return TAXA_OCUPACAO_50;}
+    public float getTaxaOcupacao70() {return TAXA_OCUPACAO_70;}
 
     public boolean verificarDisponibilidadeAssentos() {
         boolean existeAssentoLivre = false;

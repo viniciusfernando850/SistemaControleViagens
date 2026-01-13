@@ -1,7 +1,7 @@
-package StarTrackAirlines.Controllers.VoosController;
+package StarTrackAirlines.Controllers.ControleVoos;
 
 import StarTrackAirlines.Aplicacao.CompanhiaAerea.*;
-import StarTrackAirlines.Controllers.VoosController.Exception.*;
+import StarTrackAirlines.Controllers.ControleVoos.Exception.*;
 import StarTrackAirlines.Aplicacao.ManipulacaoArquivos.ControleRepository;
 import StarTrackAirlines.Aplicacao.ManipulacaoArquivos.VoosRepository;
 
@@ -13,10 +13,10 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.Map;
 
-public class VooController {
-    private CompanhiaAerea companhia;
+public class ControleVoo {
+    private final CompanhiaAerea companhia;
 
-    public VooController(CompanhiaAerea companhia){
+    public ControleVoo(CompanhiaAerea companhia){
         this.companhia = companhia;
     }
 
@@ -199,51 +199,31 @@ public class VooController {
 
     }
 
-    public void modificarVoo() throws DadosInvalidosException, IdentificadorVooInvalidoException{
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
-        Set<Aeronave> frota = companhia.getFrota();
-        Map<String, Voo> Voos = companhia.getListagemVoos();
-        Voo voo = null;
-        boolean achouIdM = false;
-        String identificador = lerLinha("Insira o identificador do voo: ");
-        if (identificador.isEmpty()) {
-            throw new DadosInvalidosException("Campo identificador vazio.");
-        }else{
-
-            for(Voo v : Voos.values()) {
-                if (v.getIdentificador().equals(identificador)) {
-                    voo = v;
-                    achouIdM = true;
-                }
-            }
-            if(!achouIdM){
-                throw new IdentificadorVooInvalidoException("Identificador inválido.");
+    public void modificarVooData(Voo voo) throws DadosInvalidosException {
+        DateTimeFormatter formatterD = DateTimeFormatter.ofPattern("dd/MM");
+        String mudData = lerLinha("Insira a nova data no formato dd/mm (ex: 18/01 para 18 de janeiro): ");
+        LocalDate dataNova = null;
+        if (mudData.isEmpty()) {
+            throw new DadosInvalidosException("Campo data vazio.");
+        } else {
+            try {
+                dataNova = LocalDate.parse(mudData, formatterD);
+            } catch (java.time.format.DateTimeParseException e) {
+                System.out.println("Formato de data inválido. Use --MM-dd.");
             }
         }
-        int opcao = lerInt("Insira a opção de mudança que quer realizar: \n1 - Data\n2 - Horário de Partida\n" +
-                "3 - Horário de Chegada\n");
-        if(opcao == 1){
-            DateTimeFormatter formatterD = DateTimeFormatter.ofPattern("dd/MM");
-            String mudData = lerLinha("Insira a nova data no formato dd/mm (ex: 18/01 para 18 de janeiro): ");
-            LocalDate dataNova = null;
-            if (mudData.isEmpty()) {
-                throw new DadosInvalidosException("Campo data vazio.");
-            } else {
-                try {
-                    dataNova = LocalDate.parse(mudData, formatterD);
-                } catch (java.time.format.DateTimeParseException e) {
-                    System.out.println("Formato de data inválido. Use --MM-dd.");
-                }
-            }
-            voo.setDataPartida(dataNova);
-            try {
-                VoosRepository cr = new VoosRepository();
-                cr.salvarDados(companhia);
-                System.out.println("Voo modificado com sucesso");
-            } catch (IOException e) {
-                System.out.println("Ocorreu um erro: " + e.getMessage());
-            }
-        }else if(opcao == 2){
+        voo.setDataPartida(dataNova);
+        try {
+            VoosRepository cr = new VoosRepository();
+            cr.salvarDados(companhia);
+            System.out.println("Voo modificado com sucesso");
+        } catch (IOException e) {
+            System.out.println("Ocorreu um erro: " + e.getMessage());
+        }
+    }
+
+    public void modificarVooHoraPartida(Voo voo) throws DadosInvalidosException {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
             String mudHorarioP = lerLinha("Insira o novo horário de partida do voo (formato HH:mm, por exemplo 14:30): ");
             LocalTime novaHoraP = LocalTime.of(0, 0, 0);
             if (mudHorarioP.isEmpty()) {
@@ -263,30 +243,65 @@ public class VooController {
             } catch (IOException e) {
                 System.out.println("Ocorreu um erro: " + e.getMessage());
             }
-        }else if(opcao == 3){
-            String mudHorarioC = lerLinha("Insira o novo horário de chegada do voo (formato HH:mm, por exemplo 14:30): ");
-            LocalTime novaHoraC = LocalTime.of(0, 0, 0);
-            if (mudHorarioC.isEmpty()) {
-                throw new DadosInvalidosException("Campo horário de chegada vazio.");
-            } else {
-                try {
-                    novaHoraC = LocalTime.parse(mudHorarioC, formatter);
-                } catch (DateTimeParseException e) {
-                    System.out.println("Erro: Formato de hora inválido. Por favor, use HH:mm (exemplo 14:30).");
-                }
-            }
-            voo.setHorarioPartida(novaHoraC);
+    }
+
+    public void modificarVooHoraChegada(Voo voo) throws DadosInvalidosException {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
+        String mudHorarioC = lerLinha("Insira o novo horário de chegada do voo (formato HH:mm, por exemplo 14:30): ");
+        LocalTime novaHoraC = LocalTime.of(0, 0, 0);
+        if (mudHorarioC.isEmpty()) {
+            throw new DadosInvalidosException("Campo horário de chegada vazio.");
+        } else {
             try {
-                VoosRepository cr = new VoosRepository();
-                cr.salvarDados(companhia);
-                System.out.println("Voo modificado com sucesso");
-            } catch (IOException e) {
-                System.out.println("Ocorreu um erro: " + e.getMessage());
+                novaHoraC = LocalTime.parse(mudHorarioC, formatter);
+            } catch (DateTimeParseException e) {
+                System.out.println("Erro: Formato de hora inválido. Por favor, use HH:mm (exemplo 14:30).");
             }
-        }else{
-            throw new DadosInvalidosException("Ocorreu um erro com a opção desejada. Tente novamente.");
+        }
+        voo.setHorarioPartida(novaHoraC);
+        try {
+            VoosRepository cr = new VoosRepository();
+            cr.salvarDados(companhia);
+            System.out.println("Voo modificado com sucesso");
+        } catch (IOException e) {
+            System.out.println("Ocorreu um erro: " + e.getMessage());
         }
     }
+
+    public void modificarVoo() throws DadosInvalidosException, IdentificadorVooInvalidoException{
+        Set<Aeronave> frota = companhia.getFrota();
+        Map<String, Voo> Voos = companhia.getListagemVoos();
+        Voo voo = null;
+        boolean achouIdM = false;
+        String identificador = lerLinha("Insira o identificador do voo: ");
+        if (identificador.isEmpty()) {
+            throw new DadosInvalidosException("Campo identificador vazio.");
+        }else{
+            for(Voo v : Voos.values()) {
+                if (v.getIdentificador().equals(identificador)) {
+                    voo = v;
+                    achouIdM = true;
+                }
+            }
+            if(!achouIdM){
+                throw new IdentificadorVooInvalidoException("Identificador inválido.");
+            }
+        }
+        int opcao;
+        do {
+            opcao = lerInt("Insira a opção de mudança que quer realizar: \n1 - Data\n2 - Horário de Partida\n" +
+                    "3 - Horário de Chegada\n0 - Sair.");
+
+            switch (opcao) {
+                case 1 -> modificarVooData(voo);
+                case 2 -> modificarVooHoraPartida(voo);
+                case 3 -> modificarVooHoraChegada(voo);
+                case 0 -> System.out.println("Encerrando...");
+                default -> System.out.println("Opção inválida!");
+            }
+        } while (opcao != 0);
+    }
+
 
     public void deletarVoo() throws DadosInvalidosException, IdentificadorVooInvalidoException{
         Map<String, Voo> Voos = companhia.getListagemVoos();

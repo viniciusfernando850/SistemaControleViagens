@@ -1,6 +1,6 @@
-package StarTrackAirlines.Controllers.CheckInController;
+package StarTrackAirlines.Controllers.ControleCheckIn;
 
-public class CheckInController {
+public class ControleCheckIn {
 
     // Verificar passagem
     //  Obs: tratamento de exceções!

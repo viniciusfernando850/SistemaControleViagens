@@ -110,17 +110,17 @@ public class Aeronave {
         Map<String, Assento> assentos = new LinkedHashMap<>();
 
         for (int i = 1; i <= assentosPrimeiraClasse; i++) {
-            Assento assento = new Assento(i, false);
+            Assento assento = new Assento(i, ClasseAssento.PRIMEIRA_CLASSE, false);
             assentos.put(assento.getCodigoAssento(), assento);
         }
 
         for (int i = 1; i <= assentosExecutiva; i++) {
-            Assento assento = new Assento(i, false);
+            Assento assento = new Assento(i, ClasseAssento.EXECUTIVA, false);
             assentos.put(assento.getCodigoAssento(), assento);
         }
 
         for (int i = 1; i <= assentosEconomica; i++) {
-            Assento assento = new Assento(i, false);
+            Assento assento = new Assento(i, ClasseAssento.PRIMEIRA_CLASSE, false);
             assentos.put(assento.getCodigoAssento(), assento);
         }
 

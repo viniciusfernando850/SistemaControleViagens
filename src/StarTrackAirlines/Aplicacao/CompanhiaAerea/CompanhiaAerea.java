@@ -1,10 +1,10 @@
 package StarTrackAirlines.Aplicacao.CompanhiaAerea;
 
-import StarTrackAirlines.Controllers.VendasController.CalculadoraTaxa;
+import StarTrackAirlines.Controllers.ControleVendas.Calculavel;
 
 import java.util.*;
 
-public class  CompanhiaAerea implements CalculadoraTaxa {
+public class  CompanhiaAerea {
     private String nome;
     private Set<Aeronave> frota;
     private Map<String, Voo> listagemVoos;
